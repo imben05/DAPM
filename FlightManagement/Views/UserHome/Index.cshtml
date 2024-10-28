@@ -1,0 +1,373 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgba(255, 255, 255, 1);
+        margin: 0;
+    }
+
+    .video-background {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 100%;
+        z-index: -1;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+    .search-container {
+        background-color: rgba(255, 255, 255, 1);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 800px;
+        margin: 400px auto 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    p {
+        color: #666;
+        margin-top: 0;
+    }
+
+    .trip-type {
+        display: flex;
+        margin-bottom: 20px;
+        justify-content: space-between;
+    }
+
+        .trip-type button {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 20px;
+            margin-right: 30px;
+            max-width: calc(50% - 15px);
+        }
+
+            .trip-type button:last-child {
+                margin-right: 0;
+            }
+
+            .trip-type button.active {
+                background-color: #4FD1C5;
+                color: white;
+                border-color: #4FD1C5;
+            }
+
+    .form-row {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        flex: 1;
+        margin-right: 10px;
+        position: relative; /* Thêm để định vị icon */
+        text-align: left; /* Đảm bảo căn trái cho nội dung trong form-group */
+    }
+
+        .form-group:last-child {
+            margin-right: 0;
+        }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        text-align: left; /* Căn trái cho label */
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"] {
+        width: 100%;
+        padding: 10px 10px 10px 35px; /* Thêm khoảng trống cho icon */
+        border: 2px solid #ddd;
+        border-radius: 20px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus {
+            border-color: #77dada; /* Màu viền khi được click */
+            box-shadow: 0 0 5px rgba(119, 218, 218, 0.5); /* Thêm hiệu ứng bóng */
+            outline: none; /* Xóa bỏ viền outline mặc định */
+        }
+
+    .form-group i {
+        position: absolute;
+        top: 35px;
+        left: 10px;
+        color: #888;
+    }
+
+    #adultCount {
+        width: 70%;
+    }
+
+    .passenger-count {
+        display: flex;
+        align-items: center;
+    }
+
+    .passenger-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .search-button {
+        width: 40%;
+        padding: 10px;
+        background-color: #4FD1C5;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 0 auto;
+        display: block;
+    }
+
+        .search-button:hover {
+            background-color: #3EA9A0;
+        }
+
+    .Flight_partnerSection__ABij9 {
+        padding: 40px 0;
+        background-color: #f7f7f7;
+        background-image: url('~/Content/Image/section-background.png');
+        background-size: cover;
+        background-position: center;
+    }
+
+
+    .PartnerSection_section__P2CUK {
+        text-align: center;
+    }
+
+    .SectionHeader_sectionHeader__60CR7 {
+        margin-bottom: 30px;
+    }
+
+    .SectionHeader_title__eE2Rf h4 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .SectionHeader_description__2ZD1p {
+        color: #666;
+        font-size: 16px;
+    }
+
+    .PartnerSection_partnerList__4jUaE {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .PartnerSection_img-wrapper__MvPBJ {
+        margin: 10px;
+        flex: 0 0 150px;
+        position: relative;
+    }
+
+        .PartnerSection_img-wrapper__MvPBJ img {
+            width: 100%;
+            height: auto;
+        }
+</style>
+
+<video autoplay muted loop class="video-background">
+    <source src="~/Content/Background.mp4" type="video/mp4">
+</video>
+
+<div class="search-container">
+    <h1>Mở cánh cửa khám phá cùng Flight</h1>
+    <p>Flight - Đặt chân lên đỉnh mây với một bước nhảy</p>
+
+    <div class="trip-type">
+        <button class="active" id="oneWay" onclick="toggleTripType('oneWay')">Một chiều</button>
+        <button id="roundTrip" onclick="toggleTripType('roundTrip')">Khứ hồi</button>
+    </div>
+
+    @using (Html.BeginForm("Search", "Flight", FormMethod.Post))
+    {
+        <div class="form-row">
+            <div class="form-group">
+                <label for="departure">Điểm đi</label>
+                <i class="fas fa-plane-departure"></i>
+                <input type="text" id="departure" name="departure" placeholder="Vui lòng nhập điểm đi">
+            </div>
+            <div class="form-group">
+                <label for="arrival">Điểm đến</label>
+                <i class="fas fa-plane-arrival"></i>
+                <input type="text" id="arrival" name="arrival" placeholder="Vui lòng nhập điểm đến">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="departureDate">Ngày đi</label>
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="departureDate" name="departureDate">
+            </div>
+            <div class="form-group" id="returnDateGroup">
+                <label for="returnDate">Ngày về</label>
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="returnDate" name="returnDate">
+            </div>
+        </div>
+
+        <button type="submit" class="search-button">Tìm chuyến bay</button>
+    }
+</div>
+
+<div class="Flight_partnerSection__ABij9 section-bg">
+    <div class="container PartnerSection_section__P2CUK">
+        <div class="SectionHeader_sectionHeader__60CR7">
+            <div class="SectionHeader_title__eE2Rf">
+                <h4>Đối tác Cùng các <br>Hãng máy bay lớn</h4>
+                <div>
+                    <span style="box-sizing: border-box; display: inline-block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;">
+                        <span style="box-sizing: border-box; display: block; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"></span>
+                    </span>
+                </div>
+            </div>
+            <p class="SectionHeader_description__2ZD1p">
+                Chúng tôi hợp tác với các hãng máy bay lớn để mang đến cho bạn những chuyến bay an toàn và tiện lợi.
+            </p>
+        </div>
+        <div class="PartnerSection_partnerList__4jUaE">
+            <div class="PartnerSection_img-wrapper__MvPBJ">
+                <img src="~/Content/Image/flight-partner-0.png" alt="Vietnam Airlines">
+            </div>
+            <div class="PartnerSection_img-wrapper__MvPBJ">
+                <img src="~/Content/Image/flight-partner-1.png" alt="VietJetAir">
+            </div>
+            <div class="PartnerSection_img-wrapper__MvPBJ">
+                <img src="~/Content/Image/flight-partner-2.png" alt="Bamboo Airways">
+            </div>
+            <div class="PartnerSection_img-wrapper__MvPBJ">
+                <img src="~/Content/Image/flight-partner-3.png" alt="Vietravel Airlines">
+            </div>
+            <div class="PartnerSection_img-wrapper__MvPBJ">
+                <img src="~/Content/Image/flight-partner-4.png" alt="Pacific Airlines">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTripType(type) {
+        document.getElementById('oneWay').classList.remove('active');
+        document.getElementById('roundTrip').classList.remove('active');
+
+        if (type === 'oneWay') {
+            document.getElementById('oneWay').classList.add('active');
+            document.getElementById('returnDateGroup').style.display = 'none';
+        } else {
+            document.getElementById('roundTrip').classList.add('active');
+            document.getElementById('returnDateGroup').style.display = 'block';
+        }
+    }
+
+    window.onload = function () {
+        var today = new Date().toISOString().split('T')[0];
+        var departureDateInput = document.getElementById('departureDate');
+        var returnDateInput = document.getElementById('returnDate');
+
+        departureDateInput.setAttribute('min', today);
+        returnDateInput.setAttribute('min', today);
+
+        departureDateInput.value = today;
+        returnDateInput.value = today;
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        toggleTripType('oneWay');
+    });
+
+    // Danh sách các thành phố có sân bay ở Việt Nam
+    var cities = [
+        "Hà Nội",
+        "Hồ Chí Minh",
+        "Đà Nẵng",
+        "Nha Trang",
+        "Phú Quốc",
+        "Hải Phòng",
+        "Vinh",
+        "Cần Thơ",
+        "Huế",
+        "Quy Nhơn",
+        "Đà Lạt",
+        "Chu Lai",
+        "Pleiku",
+        "Buôn Ma Thuột"
+    ];
+
+    $(function () {
+        $("#departure").autocomplete({
+            source: cities
+        });
+        $("#arrival").autocomplete({
+            source: cities
+        });
+    });
+
+    // Kiểm tra các trường bắt buộc
+    document.getElementById('flightSearchForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var departure = document.getElementById('departure').value.trim();
+        var arrival = document.getElementById('arrival').value.trim();
+        var departureDate = document.getElementById('departureDate').value;
+        var returnDateGroup = document.getElementById('returnDateGroup');
+        var returnDate = document.getElementById('returnDate').value;
+
+        var errorMessage = '';
+
+        if (!departure) {
+            errorMessage += 'Vui lòng nhập điểm đi.\n';
+        }
+        if (!arrival) {
+            errorMessage += 'Vui lòng nhập điểm đến.\n';
+        }
+        if (!departureDate) {
+            errorMessage += 'Vui lòng chọn ngày đi.\n';
+        }
+        if (returnDateGroup.style.display !== 'none' && !returnDate) {
+            errorMessage += 'Vui lòng chọn ngày về.\n';
+        }
+
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+</script>

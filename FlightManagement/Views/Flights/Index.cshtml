@@ -1,0 +1,69 @@
+﻿@model IEnumerable<FlightManagement.Models.Flight>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="card-text">
+    <a class="btn btn-success" href="/Flights/Create" style="padding: 5px">Thêm mới</a>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.flightNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.departureCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.arrivalCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.departureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.arrivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aircraft.model)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.flightNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.departureCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.arrivalCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.departureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.arrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aircraft.model)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.flightID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.flightID })
+            </td>
+        </tr>
+    }
+
+</table>

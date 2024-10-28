@@ -1,0 +1,48 @@
+﻿@model FlightManagement.Models.Aircraft
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <h4>Xóa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.capacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.capacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Airline.airlineName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Airline.airlineName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-group">
+    <div class="col-sm-12" style="padding: 5px">
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+        <a class="btn btn-info" href="/Aircrafts/Index">Quay lại</a>
+    </div>
+</div>
+    }
+</div>
