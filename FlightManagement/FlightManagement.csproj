@@ -215,6 +215,7 @@
     <Content Include="Content\Image\flight-partner-4.png" />
     <Content Include="Content\Image\logo 1.png" />
     <Content Include="Content\Image\logo.png" />
+    <Content Include="Content\Image\page.png" />
     <Content Include="Content\Image\section-background.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
