@@ -16,10 +16,18 @@
                     <h4 class="text-center">Đăng ký vào hệ thống!</h4>
                     <p class="text-center">Xin mời bạn nhập đầy đủ thông tin đăng ký.</p>
                     <div class="form-group col-lg-12">
-                        @Html.LabelFor(model => model.fullname, "Họ và Tên")
+                        @Html.LabelFor(model => model.lastName, "Họ")
                         <div>
-                            @Html.TextBoxFor(model => model.fullname, new { @placeholder = "Họ và Tên", @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.fullname, "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(model => model.lastName, new { @placeholder = "Họ", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
+                            <p style="color:red;">@ViewBag.Alert</p>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        @Html.LabelFor(model => model.firstName, "Tên")
+                        <div>
+                            @Html.TextBoxFor(model => model.firstName, new { @placeholder = "Tên", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
                             <p style="color:red;">@ViewBag.Alert</p>
                         </div>
                     </div>

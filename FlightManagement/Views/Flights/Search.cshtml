@@ -1,0 +1,203 @@
+﻿@model IEnumerable<FlightManagement.Models.Flight>
+
+@{
+    ViewBag.Title = "Kết Quả Tìm Kiếm Chuyến Bay";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 20px;
+    }
+
+    h2 {
+        color: #343a40;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .filter-form {
+        width: 30%;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-right: 20px; /* Thêm khoảng cách bên phải */
+    }
+
+    .filter-form label {
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+
+    .filter-form input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    .filter-form input, .filter-form select, .filter-form button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .filter-form button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .filter-form button:hover {
+        background-color: #0056b3;
+    }
+
+    .flight-info {
+        flex: 1; /* Chiếm phần còn lại */
+    }
+
+    .flight-list {
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: white;
+        margin-top: 20px; /* Thêm khoảng cách trên */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    tr {
+        transition: background-color 0.3s;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .flight-item {
+        margin-bottom: 10px; /* Thêm khoảng cách giữa các chuyến bay */
+    }
+
+    .button-book {
+        display: inline-block;
+        padding: 10px 15px;
+        color: white;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .button-book:hover {
+        background-color: #218838;
+    }
+
+    .no-results {
+        text-align: center;
+        color: #dc3545;
+        font-size: 18px;
+    }
+
+    /* Responsive Design */
+    media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .filter-form {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+<h2>Kết Quả Tìm Kiếm Chuyến Bay</h2>
+
+<div class="container">
+    <!-- Filter Form -->
+    <div class="filter-form">
+        <form action="/Flights/Search" method="post">
+            @Html.AntiForgeryToken()
+            <label>Hãng Hàng Không:</label>
+            <input type="checkbox" name="airline" value="VietJet Air">VietJet Air<br>
+            <input type="checkbox" name="airline" value="Bamboo Airways">Bamboo Airways<br>
+            <input type="checkbox" name="airline" value="Vietnam Airlines">Vietnam Airlines<br>
+
+            <label>Lịch Trình:</label>
+            <label for="departureTimeStart">Thời gian khởi hành từ:</label>
+            <input type="time" name="departureTimeStart" id="departureTimeStart" value="00:00">
+            <label for="departureTimeEnd">Đến:</label>
+            <input type="time" name="departureTimeEnd" id="departureTimeEnd" value="24:00">
+
+            <button type="submit">Lọc</button>
+        </form>
+    </div>
+
+    <!-- Flight Information -->
+    <div class="flight-info">
+        <div class="flight-list">
+            @if (Model != null && Model.Any())
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Điểm Đi</th>
+                            <th>Điểm Đến</th>
+                            <th>Ngày Đi</th>
+                            <th></th>
+                            <th>Thời Gian</th>
+                            <th>Giá</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var flight in Model)
+                        {
+                            <tr class="flight-item">
+                                <td>@flight.departureCity</td>
+                                <td>@flight.arrivalCity</td>
+                                <td>@flight.departureTime.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@flight.flightDuration.ToString(@"hh\:mm")</td>
+                                <td>@String.Format("{0:n0} đ", flight.flightPrice)</td>
+                                <td>
+                                    <a href="@Url.Action("Book", "Flight", new { id = flight.flightID })" class="button-book">Đặt</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="no-results">Không có chuyến bay nào phù hợp.</p>
+            }
+        </div>
+    </div>
+</div>

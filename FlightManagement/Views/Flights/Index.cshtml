@@ -18,9 +18,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.flightNumber)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.departureCity)
         </th>
         <th>
@@ -30,10 +27,16 @@
             @Html.DisplayNameFor(model => model.departureTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.arrivalTime)
+            @Html.DisplayNameFor(model => model.flightDuration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.flightPrice)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Aircraft.model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Airline.airlineName)
         </th>
         <th></th>
     </tr>
@@ -41,9 +44,6 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.flightNumber)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.departureCity)
             </td>
@@ -54,10 +54,16 @@
                 @Html.DisplayFor(modelItem => item.departureTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.arrivalTime)
+                @Html.DisplayFor(modelItem => item.flightDuration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.flightPrice)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Aircraft.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Airline.airlineName)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.flightID }) |

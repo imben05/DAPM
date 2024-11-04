@@ -9,7 +9,7 @@ namespace FlightManagement.Controllers
 {
     public class AirlinesController : Controller
     {
-        Db_HeThongBanVeMayBayEntities database = new Db_HeThongBanVeMayBayEntities();
+        DAPMEntities database = new DAPMEntities();
         // GET: Airlines
         public ActionResult Index()
         {

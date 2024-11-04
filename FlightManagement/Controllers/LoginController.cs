@@ -12,7 +12,7 @@ namespace FlightManagement.Controllers
 {
     public class LoginController : Controller
     {
-        Db_HeThongBanVeMayBayEntities database = new Db_HeThongBanVeMayBayEntities();
+        DAPMEntities database = new DAPMEntities();
 
         // GET: Admin
         public ActionResult Index()
@@ -44,12 +44,11 @@ namespace FlightManagement.Controllers
                 // Nếu mọi điều kiện hợp lệ, thêm mới khách hàng
                 database.Accounts.Add(new Account
                 {
-
-                    fullname = _user.fullname,
+                    lastName = _user.lastName,
+                    firstName = _user.firstName,
                     username = _user.username,
                     password = _user.password,
                     accountTypeID = 2,
-                    isActive = true
                     // Thêm các trường khác nếu cần
                 });
 
@@ -78,8 +77,9 @@ namespace FlightManagement.Controllers
                     Session["idUser"] = existingCustomer.accountID;
                     Session["Username"] = existingCustomer.username;
                     Session["Password"] = existingCustomer.password;
+                    Session["Role"] = existingCustomer.accountTypeID;
                     
-                    if (existingCustomer.AccountType.typeName == "Admin" || existingCustomer.AccountType.typeName == "Employee")
+                    if (existingCustomer.AccountType.typeName == "Admin")
                     {
                         return RedirectToAction("Index", "Login");
                     }
@@ -112,7 +112,7 @@ namespace FlightManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "fullname,username,password,isActive,accountTypeID")] Account customer)
+        public ActionResult Create([Bind(Include = "accountID,lastname,firstname, username, password, dateOfBirth, address, email, phone,accountTypeID")] Account customer)
         {
             if (ModelState.IsValid)
             {
@@ -143,17 +143,17 @@ namespace FlightManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "accountID,fullname,username,password,isActive,accountTypeID")] Account account)
+        public ActionResult Edit([Bind(Include = "accountID,lastname,firstname, username, password, dateOfBirth, address, email, phone,accountTypeID")] Account account)
         {
             if (ModelState.IsValid)
             {
                 var customerDB = database.Accounts.FirstOrDefault(p => p.accountID == account.accountID);
                 if (customerDB != null)
                 {
-                    customerDB.fullname = account.fullname;
+                    customerDB.lastName = account.lastName;
+                    customerDB.firstName = account.firstName;
                     customerDB.username = account.username;
                     customerDB.password = account.password;
-                    customerDB.isActive = account.isActive;
                     customerDB.accountTypeID = account.accountTypeID;
 
                     database.SaveChanges();
@@ -188,6 +188,43 @@ namespace FlightManagement.Controllers
                 database.SaveChanges();
             }
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            Account customer = database.Accounts.FirstOrDefault(p => p.accountID == id);
+            if (customer != null)
+            {
+                ViewBag.AccountTypes = new SelectList(database.AccountTypes, "accountTypeID", "typeName", customer.accountTypeID);
+                return View(customer);
+            }
+            else
+                return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details([Bind(Include = "accountID,lastname,firstname,dateOfBirth, address, email, phone,accountTypeID")] Account account)
+        {
+            if (ModelState.IsValid)
+            {
+                var customerDB = database.Accounts.FirstOrDefault(p => p.accountID == account.accountID);
+                if (customerDB != null)
+                {
+                    customerDB.lastName = account.lastName;
+                    customerDB.firstName = account.firstName;
+                    customerDB.dateOfBirth = account.dateOfBirth;
+                    customerDB.address = account.address;
+                    customerDB.email = account.email;
+                    customerDB.phone = account.phone;
+
+                    database.SaveChanges();
+                    TempData["SuccessMessage"] = "Sửa tài khoản thành công!";
+                    return RedirectToAction("Details", new { id = account.accountID });
+                }
+            }
+            ViewBag.AccountTypes = new SelectList(database.AccountTypes, "accountTypeID", "typeName", account.accountTypeID);
+            return View(account);
         }
     }
 }

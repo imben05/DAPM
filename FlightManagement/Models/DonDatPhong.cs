@@ -12,19 +12,16 @@ namespace FlightManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class DonDatPhong
     {
-        public int employeeID { get; set; }
+        public int IDDonDatPhong { get; set; }
+        public Nullable<int> IDPhong { get; set; }
         public Nullable<int> accountID { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public Nullable<System.DateTime> dateOfBirth { get; set; }
-        public string address { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
-        public Nullable<int> roleID { get; set; }
+        public string TenKhachHang { get; set; }
+        public string SoDienThoai { get; set; }
+        public string Email { get; set; }
     
         public virtual Account Account { get; set; }
-        public virtual EmployeeRole EmployeeRole { get; set; }
+        public virtual Phong Phong { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace FlightManagement.Controllers
 {
     public class FlightsController : Controller
     {
-        Db_HeThongBanVeMayBayEntities database = new Db_HeThongBanVeMayBayEntities();
+        DAPMEntities database = new DAPMEntities();
         // GET: Flights
         public ActionResult Index()
         {
@@ -20,12 +20,13 @@ namespace FlightManagement.Controllers
         public ActionResult Create()
         {
             ViewBag.AircraftID = new SelectList(database.Aircraft, "aircraftID", "model");
+            ViewBag.AirlineID = new SelectList(database.Airlines, "airlineID", "airlineName");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "flightID,flightNumber,departureCity,arrivalCity,departureTime,arrivalTime,aircraftID")] Flight flight)
+        public ActionResult Create([Bind(Include = "flightID,flightNumber,departureCity,arrivalCity,departureTime,flightDuration,flightPrice,aircraftID, airlineID")] Flight flight)
         {
             if (ModelState.IsValid)
             {
@@ -38,6 +39,7 @@ namespace FlightManagement.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.AircraftID = new SelectList(database.Aircraft, "aircraftID", "model", flight.aircraftID);
+             ViewBag.AirlineID = new SelectList(database.Airlines, "airlineID", "airlineName", flight.airlineID);
             return View(flight);
         }
 
@@ -48,6 +50,7 @@ namespace FlightManagement.Controllers
             if (flight != null)
             {
                 ViewBag.AircraftID = new SelectList(database.Aircraft, "aircraftID", "model", flight.aircraftID);
+                 ViewBag.AirlineID = new SelectList(database.Airlines, "airlineID", "airlineName", flight.airlineID);
                 return View(flight);
             }
             else
@@ -58,19 +61,20 @@ namespace FlightManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "flightID,flightNumber,departureCity,arrivalCity,departureTime,arrivalTime,aircraftID")] Flight flight)
+        public ActionResult Edit([Bind(Include = "flightID,departureCity,arrivalCity,departureTime,flightDuration,flightPrice,aircraftID,airlineID")] Flight flight)
         {
             if (ModelState.IsValid)
             {
                 var flightDB = database.Flights.FirstOrDefault(p => p.flightID == flight.flightID);
                 if (flightDB != null)
                 {
-                    flightDB.flightNumber = flight.flightNumber;
                     flightDB.departureCity = flight.departureCity;
                     flightDB.arrivalCity = flight.arrivalCity;
                     flightDB.departureTime = flight.departureTime;
-                    flightDB.arrivalTime = flight.arrivalTime;
+                    flightDB.flightDuration = flight.flightDuration;
+                    flightDB.flightPrice = flight.flightPrice;
                     flightDB.aircraftID = flight.aircraftID;
+                    flightDB.airlineID = flight.airlineID;
 
                     database.SaveChanges();
                     TempData["SuccessMessage"] = "Chỉnh sửa thành công!";
@@ -78,6 +82,7 @@ namespace FlightManagement.Controllers
                 }
             }
             ViewBag.AircraftID = new SelectList(database.Aircraft, "aircraftID", "model", flight.aircraftID);
+             ViewBag.AirlineID = new SelectList(database.Airlines, "airlineID", "airlineName", flight.airlineID);
             return View(flight);
         }
 
@@ -104,6 +109,37 @@ namespace FlightManagement.Controllers
                 database.SaveChanges();
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search(string departureCity, string arrivalCity, DateTime? departureTime)
+        {
+            // Lấy danh sách chuyến bay từ cơ sở dữ liệu
+            var flightList = database.Flights.AsQueryable(); // AsQueryable() cho phép linh hoạt với các truy vấn
+
+            // Lọc theo thành phố khởi hành
+            if (!string.IsNullOrEmpty(departureCity))
+            {
+                flightList = flightList.Where(x => x.departureCity == departureCity);
+            }
+
+            // Lọc theo thành phố đến
+            if (!string.IsNullOrEmpty(arrivalCity))
+            {
+                flightList = flightList.Where(x => x.arrivalCity == arrivalCity);
+            }
+
+            // Lọc theo thời gian khởi hành
+            if (departureTime.HasValue)
+            {
+                flightList = flightList.Where(x => x.departureTime.Date == departureTime.Value.Date);
+            }
+
+            return View("Search", flightList.ToList());
         }
     }
 }

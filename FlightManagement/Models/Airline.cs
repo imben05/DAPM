@@ -11,23 +11,23 @@ namespace FlightManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-
+    
     public partial class Airline
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Airline()
         {
             this.Aircraft = new HashSet<Aircraft>();
+            this.Flights = new HashSet<Flight>();
         }
-        [DisplayName("ID")]
+    
         public int airlineID { get; set; }
-        [DisplayName("Tên máy bay")]
         public string airlineName { get; set; }
-        [DisplayName("Code")]
         public string code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Aircraft> Aircraft { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Flight> Flights { get; set; }
     }
 }

@@ -186,18 +186,12 @@
                 </a>
             </div>
             <ul>
-                <li><a href="@Url.Action("Index", "Customer")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Customers") ? "active" : "")"><i class="fas fa-user-friends icon"></i> Customer</a></li>
                 <li><a href="@Url.Action("Index", "Login")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Accounts") ? "active" : "")"><i class="fas fa-user icon"></i> Account</a></li>
                 <li><a href="@Url.Action("Index", "Airlines")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Airlines") ? "active" : "")"><i class="fas fa-plane icon"></i> Airline</a></li>
                 <li><a href="@Url.Action("Index", "Aircrafts")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Aircrafts") ? "active" : "")"><i class="fas fa-plane-departure icon"></i> Aircraft</a></li>
                 <li><a href="@Url.Action("Index", "Flights")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Flights") ? "active" : "")"><i class="fas fa-fighter-jet icon"></i> Flight</a></li>
-                <li><a href="@Url.Action("Index", "Passenger")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Passengers") ? "active" : "")"><i class="fas fa-passport icon"></i> Passenger</a></li>
-                <li><a href="@Url.Action("Index", "Ticket")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Tickets") ? "active" : "")"><i class="fas fa-ticket-alt icon"></i> Ticket</a></li>
                 <li><a href="@Url.Action("Index", "Booking")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Bookings") ? "active" : "")"><i class="fas fa-book icon"></i> Booking</a></li>
-                <li><a href="@Url.Action("Index", "Payment")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Payments") ? "active" : "")"><i class="fas fa-credit-card icon"></i> Payments</a></li>
-                <li><a href="@Url.Action("Index", "EmployeeRoles")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "EmployeeRoles") ? "active" : "")"><i class="fas fa-user-tag icon"></i> Employee Role</a></li>
-                <li><a href="@Url.Action("Index", "Employee")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Employees") ? "active" : "")"><i class="fas fa-user-tie icon"></i> Employee</a></li>
-                <li class="Header_menu__jRq_R h-full flex align-center" style="margin-left: 10px">
+                <li><a href="@Url.Action("Index", "Payment")" class="@((ViewContext.RouteData.Values["controller"].ToString() == "Payments") ? "active" : "")"><i class="fas fa-credit-card icon"></i> Payments</a></li>               <li class="Header_menu__jRq_R h-full flex align-center" style="margin-left: 10px">
                     <a href="javascript:void(0);" onclick="confirmLogout();" class="md"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>
                 </li>
 

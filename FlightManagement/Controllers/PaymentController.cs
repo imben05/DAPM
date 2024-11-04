@@ -9,7 +9,7 @@ namespace FlightManagement.Controllers
 {
     public class PaymentController : Controller
     {
-        Db_HeThongBanVeMayBayEntities database = new Db_HeThongBanVeMayBayEntities();
+        DAPMEntities database = new DAPMEntities();
 
         // GET: Aircrafts
         public ActionResult Index()

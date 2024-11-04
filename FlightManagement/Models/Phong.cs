@@ -12,19 +12,24 @@ namespace FlightManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeeRole
+    public partial class Phong
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EmployeeRole()
+        public Phong()
         {
-            this.Employees = new HashSet<Employee>();
+            this.DonDatPhongs = new HashSet<DonDatPhong>();
         }
     
-        public int roleID { get; set; }
-        public string roleName { get; set; }
-        public string description { get; set; }
+        public int IDPhong { get; set; }
+        public string TenPhong { get; set; }
+        public string LoaiPhong { get; set; }
+        public string ThongTinPhong { get; set; }
+        public string Vitri { get; set; }
+        public double KhuyenMai { get; set; }
+        public double Gia { get; set; }
+        public byte[] HinhAnh { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<DonDatPhong> DonDatPhongs { get; set; }
     }
 }

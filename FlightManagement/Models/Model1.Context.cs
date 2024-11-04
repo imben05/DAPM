@@ -13,10 +13,10 @@ namespace FlightManagement.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Db_HeThongBanVeMayBayEntities : DbContext
+    public partial class DAPMEntities : DbContext
     {
-        public Db_HeThongBanVeMayBayEntities()
-            : base("name=Db_HeThongBanVeMayBayEntities")
+        public DAPMEntities()
+            : base("name=DAPMEntities")
         {
         }
     
@@ -30,12 +30,11 @@ namespace FlightManagement.Models
         public virtual DbSet<Aircraft> Aircraft { get; set; }
         public virtual DbSet<Airline> Airlines { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<EmployeeRole> EmployeeRoles { get; set; }
+        public virtual DbSet<DonDatPhong> DonDatPhongs { get; set; }
         public virtual DbSet<Flight> Flights { get; set; }
         public virtual DbSet<Passenger> Passengers { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<Phong> Phongs { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
     }
 }
